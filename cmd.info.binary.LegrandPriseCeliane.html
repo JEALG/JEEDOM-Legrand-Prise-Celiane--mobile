@@ -13,14 +13,14 @@
  			// Options de personnalisation avec valeur par defaut 
                // Paramètrage du logo
                   // Valeur pour ON ou 1
-                      	var srcImglogoON		= ('#logoON#'!='#'+'logoON#') ? "#logoON#" : "legrand-prise-on";
+                      	var srcImglogoON	= ('#logoON#'!='#'+'logoON#') ? "#logoON#" : "legrand-prise-on";
 					  	var srcImglogoON_T 	= ('#logoON_type#'!='#'+'logoON_type#') ? "#logoON_type#" : "png";
                   // Valeur pour OFF ou 0
                       	var srcImglogoOFF	= ('#logoOFF#'!='#'+'logoOFF#') ? "#logoOFF#" : "legrand-prise-off";
-					  	var srcImglogoOFF_T 	= ('#logoOFF_type#'!='#'+'logoOFF_type#') ? "#logoOFF_type#" : "png";
+					  	var srcImglogoOFF_T = ('#logoOFF_type#'!='#'+'logoOFF_type#') ? "#logoOFF_type#" : "png";
                // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
-                      	var srcImgHeight 	= (is_numeric('#sizehw#')) ? parseFloat('#sizehw#') : 40;
-					  	var srcImgWidth		= (is_numeric('#sizehw#')) ? parseFloat('#sizehw#') : 40;
+                      	var srcImgHeight 	= (is_numeric('#sizeh-M#')) ? parseFloat('#sizeh-M#') : 40;
+					  	var srcImgWidth		= (is_numeric('#sizew-M#')) ? parseFloat('#sizew-M#') : 40;
               // Paramétrage des images
                       	var srcImgURL 		= 'plugins/widget/core/template/mobile/cmd.info.binary.LegrandPriseCeliane/';
 					  	var srcImgOn 		= srcImgURL + srcImglogoON +'.'+ srcImglogoON_T; 	// Pour Valeur = 1
