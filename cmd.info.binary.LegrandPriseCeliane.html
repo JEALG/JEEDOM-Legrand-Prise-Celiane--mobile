@@ -1,7 +1,7 @@
 <div style="width:90px;height:100%;vertical-align: top;" class="cmd #history# tooltips cmd-widget container-fluid" data-type="info" data-subtype="binary" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
   	<!-- Info Widget
         Basé sur les widget de  : LegrandPriseCeliane "Dashboard LegrandPriseCeliane" de ksoul78
-        Mise à jour				: JAG 20190527 : Correction code pour V4
+        Mise à jour				: JAG 20190806 : Correction Bug duree
     -->
     <span style="font-size:12px;#hideCmdName#">#name_display#</span>
     <div class="iconCmd#uid#"></div>
@@ -35,20 +35,21 @@
                 $('.cmd[data-cmd_id=#id#] .iconCmd#uid#').empty().append('<img src="'+srcImgURL_M +srcImglogoER_M +'.'+ srcImglogoER_M_T+'" '+srcImgSize_M+'>');
             }
       
-		// Derniere durée changement dernier etat
-			//Merci @Salvialf pour le code
-			if (srcImglogoTime_M == "duree") {
-				jeedom.cmd.displayDuration(_options.valueDate, $('.cmd[data-cmd_id=#id#] .timeCmd#id#'));
-			} else if (srcImglogoTime == "date") {
-				var srcdate_M     = new Date(_options.valueDate);
-				var srcformat_M   = $.datepicker.formatDate('D dd/mm', srcdate_M);
-				var srctime_M     = "à "+srcdate_M.getHours()+":"+(srcdate_M.getMinutes()<10?'0':'')+srcdate_M.getMinutes();
-				$('.cmd[data-cmd_id=#id#] .timeCmd#id#').empty().html(srcformat_M+'<br>'+srctime_M);
-			} else if (srcImglogoTime == "heure") {
-				var srcdate_M     = new Date(_options.valueDate);
-				var srctime_M     = "à "+srcdate_M.getHours()+":"+(srcdate_M.getMinutes()<10?'0':'')+srcdate_M.getMinutes()+":"+(srcdate_M.getSeconds()<10?'0':'')+srcdate_M.getSeconds()+"";
+	        // Derniere durée changement dernier etat -- Merci @Salvialf pour le code
+            if (srcImglogoTime_M == 'duree') {
+                jeedom.cmd.displayDuration(_options.valueDate, $('.cmd[data-cmd_id=#id#] .timeCmd#id#'));
+            } else if (srcImglogoTime_M == 'date') {
+                var srcweek_M   = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
+                var srcdate_M   = new Date(_options.valueDate.replace(' ', 'T'));
+                var t           = _options.valueDate.split(/[- :]/);
+                var srcformat_M = srcweek_M[srcdate_M.getDay()]+" "+t[2]+"/"+t[1];
+                var srctime_M   = "à "+t[3]+":"+t[4];
+                $('.cmd[data-cmd_id=#id#] .timeCmd#id#').empty().html(srcformat_M+'<br>'+srctime_M);
+            } else if (srcImglogoTime_M == 'heure') {
+                var srcdate_M   = new Date(_options.valueDate);
+				var srctime_M   = "à "+srcdate_M.getHours()+":"+(srcdate_M.getMinutes()<10?'0':'')+srcdate_M.getMinutes()+":"+(srcdate_M.getSeconds()<10?'0':'')+srcdate_M.getSeconds()+"";
 				$('.cmd[data-cmd_id=#id#] .timeCmd#id#').empty().html(srctime_M);
-			};
+            }
 		$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
 	} 
 	jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
