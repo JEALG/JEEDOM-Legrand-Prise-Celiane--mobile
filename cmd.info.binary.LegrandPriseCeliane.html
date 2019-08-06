@@ -1,40 +1,57 @@
-<div style="width:42px;min-height:42px;" class="cmd cmd-widget #history# tooltips" data-type="info" data-subtype="binary" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
-	<!-- Info Widget
-		Créer par   	: JAG
-		Basé sur	: LegrandPriseCeliane "Dashboard LegrandPriseCeliane" de ksoul78
-		Mise à jour 	: JAG 20190317 : ajout centrer widget (merci à Antoinekl1)
-	-->   
-  	<center>
-    		<span class="cmdName" id="cmdName#id#" style="font-weight: bold;font-size : 10px; #hideCmdName#;">#name_display#</span>
-		<span style="font-size: 1.1em;" class="iconCmd#uid#"></span>
-	</center>
-	<script>
-		jeedom.cmd.update['#id#'] = function(_options){
- 			// Options de personnalisation avec valeur par defaut 
-               // Paramètrage du logo
-                  // Valeur pour ON ou 1
-                      	var srcImglogoON	= ('#logoON#'!='#'+'logoON#') ? "#logoON#" : "legrand-prise-on";
-					  	var srcImglogoON_T 	= ('#logoON_type#'!='#'+'logoON_type#') ? "#logoON_type#" : "png";
-                  // Valeur pour OFF ou 0
-                      	var srcImglogoOFF	= ('#logoOFF#'!='#'+'logoOFF#') ? "#logoOFF#" : "legrand-prise-off";
-					  	var srcImglogoOFF_T = ('#logoOFF_type#'!='#'+'logoOFF_type#') ? "#logoOFF_type#" : "png";
-               // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
-                      	var srcImgHeight 	= (is_numeric('#sizeh-M#')) ? parseFloat('#sizeh-M#') : 40;
-					  	var srcImgWidth		= (is_numeric('#sizew-M#')) ? parseFloat('#sizew-M#') : 40;
-              // Paramétrage des images
-                      	var srcImgURL 		= 'plugins/widget/core/template/mobile/cmd.info.binary.LegrandPriseCeliane/';
-					  	var srcImgOn 		= srcImgURL + srcImglogoON +'.'+ srcImglogoON_T; 	// Pour Valeur = 1
-					  	var srcImgOff 		= srcImgURL + srcImglogoOFF +'.'+ srcImglogoOFF_T;  	// Pour valeur = 0   
-          
-
-			$(".iconCmd#uid#").empty();
-			if (parseInt(_options.display_value) == 1) {
-              	$(".iconCmd#uid#").append('<img src="'+srcImgOn+'" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
-			} else {
-              	$(".iconCmd#uid#").append('<img src="'+srcImgOff+'" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
-			}
-			$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
-		}
-		jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
-	</script>
+<div style="width:90px;height:100%;vertical-align: top;" class="cmd #history# tooltips cmd-widget container-fluid" data-type="info" data-subtype="binary" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
+  	<!-- Info Widget
+        Basé sur les widget de  : LegrandPriseCeliane "Dashboard LegrandPriseCeliane" de ksoul78
+        Mise à jour				: JAG 20190806 : Correction Bug duree
+    -->
+    <span style="font-size:12px;#hideCmdName#">#name_display#</span>
+    <div class="iconCmd#uid#"></div>
+    <span class="timeCmd#id# label value" style="font-weight: bold;font-size : 10px;"></span>
+ <script> 
+	jeedom.cmd.update['#id#'] = function(_options){
+		// Paramètrage du logo
+            // Valeur pour ON ou 1
+                var srcImglogoON_M      = ('#logoON-M#'!='#'+'logoON-M#') ? "#logoON-M#" : "legrand-prise-on";
+                var srcImglogoON_M_T    = ('#logoON_type-M#'!='#'+'logoON_type-M#') ? "#logoON_type-M#" : "png";
+            // Valeur pour OFF ou 0
+                var srcImglogoOFF_M	    = ('#logoOFF-M#'!='#'+'logoOFF-M#') ? "#logoOFF-M#" : "legrand-prise-off";
+                var srcImglogoOFF_M_T   = ('#logoOFF_type-M#'!='#'+'logoOFF_type-M#') ? "#logoOFF_type-M#" : "png";
+		// Paramètrage du logo pour Erreur
+                var srcImglogoER_M      = ('#logoER-M#'!='#'+'logoER-M#') ? "#logoER-M#": "oups";
+                var srcImglogoER_M_T    = ('#logoER_type-M#'!='#'+'logoER_type-M#') ? "#logoER_type-M#": "png";
+		// Paramètre "sizeh" & "sizew"
+                var srcImgHeight_M      = is_numeric('#sizeh-M#') ? parseFloat('#sizeh-M#'):40;
+                var srcImgWidth_M       = is_numeric('#sizew-M#') ? parseFloat('#sizew-M#'):40;
+                var srcImgSize_M        = 'height='+srcImgHeight_M+'px width='+srcImgWidth_M+'px';
+		// Paramétrage des images
+                var srcImgURL_M         = 'plugins/widget/core/template/mobile/cmd.info.binary.LegrandPriseCeliane/';
+		// Affichage durée changement dernier etat
+                var srcImglogoTime_M    = '#logoTime-M#';
+        
+            if (_options.display_value == '1') {
+                $('.cmd[data-cmd_id=#id#] .iconCmd#uid#').empty().append('<img src="'+srcImgURL_M +srcImglogoON_M +'.'+ srcImglogoON_M_T+'" '+srcImgSize_M+'>');
+            }else if (_options.display_value == '0') {
+                $('.cmd[data-cmd_id=#id#] .iconCmd#uid#').empty().append('<img src="'+srcImgURL_M +srcImglogoOFF_M +'.'+ srcImglogoOFF_M_T+'" '+srcImgSize_M+'>');
+            }else {
+                $('.cmd[data-cmd_id=#id#] .iconCmd#uid#').empty().append('<img src="'+srcImgURL_M +srcImglogoER_M +'.'+ srcImglogoER_M_T+'" '+srcImgSize_M+'>');
+            }
+      
+	        // Derniere durée changement dernier etat -- Merci @Salvialf pour le code
+            if (srcImglogoTime_M == 'duree') {
+                jeedom.cmd.displayDuration(_options.valueDate, $('.cmd[data-cmd_id=#id#] .timeCmd#id#'));
+            } else if (srcImglogoTime_M == 'date') {
+                var srcweek_M   = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
+                var srcdate_M   = new Date(_options.valueDate.replace(' ', 'T'));
+                var t           = _options.valueDate.split(/[- :]/);
+                var srcformat_M = srcweek_M[srcdate_M.getDay()]+" "+t[2]+"/"+t[1];
+                var srctime_M   = "à "+t[3]+":"+t[4];
+                $('.cmd[data-cmd_id=#id#] .timeCmd#id#').empty().html(srcformat_M+'<br>'+srctime_M);
+            } else if (srcImglogoTime_M == 'heure') {
+                var srcdate_M   = new Date(_options.valueDate);
+				var srctime_M   = "à "+srcdate_M.getHours()+":"+(srcdate_M.getMinutes()<10?'0':'')+srcdate_M.getMinutes()+":"+(srcdate_M.getSeconds()<10?'0':'')+srcdate_M.getSeconds()+"";
+				$('.cmd[data-cmd_id=#id#] .timeCmd#id#').empty().html(srctime_M);
+            }
+		$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
+	} 
+	jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
+  </script>
 </div>
